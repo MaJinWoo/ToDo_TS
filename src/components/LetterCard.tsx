@@ -1,12 +1,13 @@
-import { Todo } from "../App";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/config/configStore";
+import { deleteTodo, switchTodo } from "../redux/modules/todosSlice";
+import { Todo } from "../types/Todo";
 
-type Props = {
-  todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
-  isDone: boolean;
-};
+type PickType = Pick<Todo, "isDone">;
 
-export default function LetterCard({ todos, setTodos, isDone }: Props) {
+export default function LetterCard({ isDone }: PickType) {
+  const todos = useSelector((state: RootState) => state.todosSlice);
+  const dispatch = useDispatch();
   return (
     <div>
       {todos
@@ -22,28 +23,14 @@ export default function LetterCard({ todos, setTodos, isDone }: Props) {
               <p>{todo.isDone.toString()}</p>
               <button
                 onClick={function () {
-                  const newTodos = todos.filter(
-                    (filteredTodo) => filteredTodo.id !== todo.id
-                  );
-
-                  setTodos(newTodos);
+                  dispatch(deleteTodo(todo.id));
                 }}
               >
                 삭제
               </button>
               <button
                 onClick={function () {
-                  // 새로운 배열 생성
-                  const newTodos = todos.map(function (item) {
-                    if (item.id === todo.id) {
-                      return { ...item, isDone: !item.isDone };
-                    } else {
-                      return item;
-                    }
-                  });
-
-                  // setTodos
-                  setTodos(newTodos);
+                  dispatch(switchTodo(todo.id));
                 }}
               >
                 {isDone ? "취소" : "완료"}

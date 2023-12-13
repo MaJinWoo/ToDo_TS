@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { Todo } from "../App";
-type Props = {
-  todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
-};
-export default function AddForm({ todos, setTodos }: Props) {
+import { useDispatch, useSelector } from "react-redux";
+import { addTodo } from "../redux/modules/todosSlice";
+import { RootState } from "../redux/config/configStore";
+
+export default function AddForm() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
-
+  const todos = useSelector((state: RootState) => state.todosSlice);
+  const dispatch = useDispatch();
   return (
     <div>
       <p>TodoList 추가하기</p>
@@ -20,7 +20,7 @@ export default function AddForm({ todos, setTodos }: Props) {
             content,
             isDone: false,
           };
-          setTodos([...todos, newTodo]);
+          dispatch(addTodo(newTodo));
           setTitle("");
           setContent("");
         }}
