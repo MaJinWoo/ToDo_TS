@@ -1,28 +1,43 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addTodo } from "../redux/modules/todosSlice";
-import { RootState } from "../redux/config/configStore";
+import { Todo } from "../types/Todo";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { addTodo } from "../axios/todos";
 
+type OmitType = Omit<Todo, "id">;
 export default function AddForm() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
-  const todos = useSelector((state: RootState) => state.todosSlice);
-  const dispatch = useDispatch();
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: addTodo,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+  });
+  const handleAddTodoSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const newTodo: OmitType = {
+      title,
+      content,
+      isDone: false,
+    };
+    try {
+      mutation.mutate(newTodo);
+    } catch (error) {
+      console.log("add 에러 발생:", error);
+    }
+    setTitle("");
+    setContent("");
+  };
+
   return (
     <div>
       <p>TodoList 추가하기</p>
       <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          const newTodo = {
-            id: todos.length + 1,
-            title,
-            content,
-            isDone: false,
-          };
-          dispatch(addTodo(newTodo));
-          setTitle("");
-          setContent("");
+        onSubmit={(event) => {
+          handleAddTodoSubmit(event);
         }}
       >
         <label>제목</label>
