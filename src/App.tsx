@@ -1,6 +1,6 @@
 import { useState } from "react";
 import AddForm from "./components/AddForm";
-import LetterList from "./components/LetterList";
+import TodosList from "./components/TodosList";
 export type Todo = {
   id: number;
   title: string;
@@ -33,8 +33,8 @@ function App() {
       <header>Todo List</header>
       <main>
         <AddForm todos={todos} setTodos={setTodos} />
-        <LetterList todos={todos} setTodos={setTodos} isDone={false} />
-        <LetterList todos={todos} setTodos={setTodos} isDone={true} />
+        <TodosList todos={todos} setTodos={setTodos} isDone={false} />
+        <TodosList todos={todos} setTodos={setTodos} isDone={true} />
       </main>
     </div>
   );

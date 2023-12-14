@@ -6,7 +6,7 @@ type Props = {
   isDone: boolean;
 };
 
-export default function LetterCard({ todos, setTodos, isDone }: Props) {
+export default function TodoCard({ todos, setTodos, isDone }: Props) {
   return (
     <div>
       {todos
