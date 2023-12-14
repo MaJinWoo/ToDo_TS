@@ -1,8 +1,7 @@
 import { useDispatch } from "react-redux";
 import { Todo } from "../types/Todo";
-import { deleteTodo, switchTodo } from "../redux/modules/todosSlice";
-
-type IdType = Todo["id"];
+import { setTodos } from "../redux/modules/todosSlice";
+import { axiosDeleteTodo, axiosSwitchTodo, fetchTodos } from "../axios/todos";
 
 export default function TodosList({
   title,
@@ -12,23 +11,37 @@ export default function TodosList({
   todos: Todo[];
 }) {
   const dispatch = useDispatch();
-  const handleDeleteBtnClick = (id: IdType) => {
-    dispatch(deleteTodo(id));
+
+  const handleDeleteBtnClick = async (id: Todo["id"]) => {
+    try {
+      await axiosDeleteTodo(id);
+      await fetchTodos().then((data) => dispatch(setTodos(data)));
+    } catch (error) {
+      console.log("delete error", error);
+    }
   };
-  const handleSwitchBtnClick = (id: IdType) => {
-    dispatch(switchTodo(id));
+
+  const handleSwitchBtnClick = async (
+    id: Todo["id"],
+    isDone: Todo["isDone"]
+  ) => {
+    try {
+      await axiosSwitchTodo(id, isDone);
+      await fetchTodos().then((data) => dispatch(setTodos(data)));
+    } catch (error) {}
   };
+
   return (
     <div>
       <h2>{title}</h2>
       {todos.map((todo) => {
         return (
-          <ul>
+          <ul key={todo.id}>
             <li>{todo.title}</li>
             <li>{todo.content}</li>
             <li>{todo.isDone.toString()}</li>
             <button onClick={() => handleDeleteBtnClick(todo.id)}>삭제</button>
-            <button onClick={() => handleSwitchBtnClick(todo.id)}>
+            <button onClick={() => handleSwitchBtnClick(todo.id, todo.isDone)}>
               {todo.isDone ? "취소" : "완료"}
             </button>
           </ul>
