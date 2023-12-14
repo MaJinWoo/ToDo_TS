@@ -1,6 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Todo } from "../types/Todo";
-import { deleteTodo, switchTodo } from "../axios/todos";
+import { useTodos } from "../hooks";
 
 export default function TodosList({
   title,
@@ -9,24 +7,11 @@ export default function TodosList({
   title: string;
   todos: Todo[];
 }) {
-  const queryClient = useQueryClient();
-
-  const deleteMutation = useMutation({
-    mutationFn: deleteTodo,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["todos"] });
-    },
-  });
-  const switchMutation = useMutation({
-    mutationFn: switchTodo,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["todos"] });
-    },
-  });
+  const { deleteTodo, switchTodo } = useTodos();
 
   const handleDeleteBtnClick = async (id: Todo["id"]) => {
     try {
-      deleteMutation.mutate(id);
+      deleteTodo(id);
     } catch (error) {
       console.log("delete error", error);
     }
@@ -37,15 +22,14 @@ export default function TodosList({
     isDone: Todo["isDone"]
   ) => {
     try {
-      // 전달할 때 묶어서 전달!!
-      switchMutation.mutate({ id, isDone });
+      switchTodo(id, isDone);
     } catch (error) {}
   };
 
   return (
     <div>
       <h2>{title}</h2>
-      {todos.map((todo) => {
+      {todos?.map((todo) => {
         return (
           <ul key={todo.id}>
             <li>{todo.title}</li>

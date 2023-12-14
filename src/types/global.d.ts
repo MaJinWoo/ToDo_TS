@@ -1,6 +1,6 @@
-export type Todo = {
+interface Todo {
   id: string;
   title: string;
   content: string;
   isDone: boolean;
-};
+}
