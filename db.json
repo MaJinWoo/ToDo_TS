@@ -1,12 +1,6 @@
 {
   "todos": [
     {
-      "id": 3,
-      "title": "TIL쓰기",
-      "content": "TIL 쓰고 제출하기",
-      "isDone": true
-    },
-    {
       "id": 2,
       "title": "리액트 공부",
       "content": "리액트 공부하기",
@@ -17,6 +11,18 @@
       "content": "화이팅하자 진우야",
       "isDone": false,
       "id": 4
+    },
+    {
+      "title": "리액트쿼리",
+      "content": "리액트쿼리 마스터!!",
+      "isDone": false,
+      "id": 5
+    },
+    {
+      "title": "TIL 작성",
+      "content": "TIL 써야지",
+      "isDone": false,
+      "id": 6
     }
   ]
 }

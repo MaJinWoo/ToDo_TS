@@ -1,11 +1,6 @@
-import { useDispatch } from "react-redux";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Todo } from "../types/Todo";
-import { AppDispatch } from "../redux/config/configStore";
-import {
-  __deleteTodo,
-  __fetchTodos,
-  __switchTodo,
-} from "../redux/modules/todosSlice";
+import { deleteTodo, switchTodo } from "../axios/todos";
 
 export default function TodosList({
   title,
@@ -14,12 +9,24 @@ export default function TodosList({
   title: string;
   todos: Todo[];
 }) {
-  const dispatch = useDispatch<AppDispatch>();
+  const queryClient = useQueryClient();
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteTodo,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+  });
+  const switchMutation = useMutation({
+    mutationFn: switchTodo,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+  });
 
   const handleDeleteBtnClick = async (id: Todo["id"]) => {
     try {
-      await dispatch(__deleteTodo(id));
-      await dispatch(__fetchTodos());
+      deleteMutation.mutate(id);
     } catch (error) {
       console.log("delete error", error);
     }
@@ -30,8 +37,8 @@ export default function TodosList({
     isDone: Todo["isDone"]
   ) => {
     try {
-      await dispatch(__switchTodo({ id, isDone }));
-      await dispatch(__fetchTodos());
+      // 전달할 때 묶어서 전달!!
+      switchMutation.mutate({ id, isDone });
     } catch (error) {}
   };
 

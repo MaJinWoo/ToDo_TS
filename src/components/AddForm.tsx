@@ -1,16 +1,21 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../redux/config/configStore";
-import { __addTodo, __fetchTodos } from "../redux/modules/todosSlice";
 import { Todo } from "../types/Todo";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { addTodo } from "../axios/todos";
 
 type OmitType = Omit<Todo, "id">;
 export default function AddForm() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
 
-  const dispatch = useDispatch<AppDispatch>();
+  const queryClient = useQueryClient();
 
+  const mutation = useMutation({
+    mutationFn: addTodo,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+  });
   const handleAddTodoSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newTodo: OmitType = {
@@ -19,8 +24,7 @@ export default function AddForm() {
       isDone: false,
     };
     try {
-      await dispatch(__addTodo(newTodo));
-      await dispatch(__fetchTodos());
+      mutation.mutate(newTodo);
     } catch (error) {
       console.log("add 에러 발생:", error);
     }

@@ -1,20 +1,14 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useQuery } from "@tanstack/react-query";
 import AddForm from "../components/AddForm";
 import TodosList from "../components/TodosList";
-import { AppDispatch, RootState } from "../redux/config/configStore";
-import { useEffect } from "react";
-import { __fetchTodos } from "../redux/modules/todosSlice";
+import { fetchTodos } from "../axios/todos";
+import { Todo } from "../types/Todo";
 
 export default function Home() {
-  const dispatch = useDispatch<AppDispatch>();
-
-  const { todos, isLoading, isError, error } = useSelector(
-    (state: RootState) => state.todosSlice
-  );
-
-  useEffect(() => {
-    dispatch(__fetchTodos());
-  }, []);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["todos"],
+    queryFn: fetchTodos,
+  });
 
   if (isLoading) {
     return <div>로딩 중...</div>;
@@ -23,8 +17,9 @@ export default function Home() {
     return <div>에러 발생!</div>;
   }
 
-  const todoList = todos.filter((todo) => todo.isDone === false);
-  const doneList = todos.filter((todo) => todo.isDone === true);
+  // 이럴 땐 어떻게 해야 하나요?
+  const todoList = data.filter((todo: Todo) => todo.isDone === false);
+  const doneList = data.filter((todo: Todo) => todo.isDone === true);
 
   return (
     <div>
