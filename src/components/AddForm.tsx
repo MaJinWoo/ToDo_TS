@@ -1,33 +1,29 @@
 import { useState } from "react";
-import { Todo } from "../types/Todo";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addTodo } from "../axios/todos";
+import { useTodos } from "../hooks";
 
 type OmitType = Omit<Todo, "id">;
+
 export default function AddForm() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
 
-  const queryClient = useQueryClient();
+  const { addTodo } = useTodos();
 
-  const mutation = useMutation({
-    mutationFn: addTodo,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["todos"] });
-    },
-  });
   const handleAddTodoSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const newTodo: OmitType = {
       title,
       content,
       isDone: false,
     };
+
     try {
-      mutation.mutate(newTodo);
+      addTodo(newTodo);
     } catch (error) {
       console.log("add 에러 발생:", error);
     }
+
     setTitle("");
     setContent("");
   };

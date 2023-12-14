@@ -1,8 +1,9 @@
 import api from "../axios/api";
-import { Todo } from "../types/Todo";
 
 type NewTodoType = Omit<Todo, "id">;
 type SwitchTodoType = Pick<Todo, "id" | "isDone">;
+
+// api 관련 로직
 
 export const fetchTodos = async () => {
   try {
@@ -13,6 +14,7 @@ export const fetchTodos = async () => {
     return error;
   }
 };
+
 export const addTodo = async (newTodo: NewTodoType) => {
   try {
     await api.post("/todos", newTodo);

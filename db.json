@@ -17,12 +17,6 @@
       "content": "리액트쿼리 마스터!!",
       "isDone": false,
       "id": 5
-    },
-    {
-      "title": "TIL 작성",
-      "content": "TIL 써야지",
-      "isDone": false,
-      "id": 6
     }
   ]
 }
