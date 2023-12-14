@@ -1,7 +1,11 @@
 import { useDispatch } from "react-redux";
 import { Todo } from "../types/Todo";
-import { setTodos } from "../redux/modules/todosSlice";
-import { axiosDeleteTodo, axiosSwitchTodo, fetchTodos } from "../axios/todos";
+import { AppDispatch } from "../redux/config/configStore";
+import {
+  __deleteTodo,
+  __fetchTodos,
+  __switchTodo,
+} from "../redux/modules/todosSlice";
 
 export default function TodosList({
   title,
@@ -10,12 +14,12 @@ export default function TodosList({
   title: string;
   todos: Todo[];
 }) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleDeleteBtnClick = async (id: Todo["id"]) => {
     try {
-      await axiosDeleteTodo(id);
-      await fetchTodos().then((data) => dispatch(setTodos(data)));
+      await dispatch(__deleteTodo(id));
+      await dispatch(__fetchTodos());
     } catch (error) {
       console.log("delete error", error);
     }
@@ -26,8 +30,8 @@ export default function TodosList({
     isDone: Todo["isDone"]
   ) => {
     try {
-      await axiosSwitchTodo(id, isDone);
-      await fetchTodos().then((data) => dispatch(setTodos(data)));
+      await dispatch(__switchTodo({ id, isDone }));
+      await dispatch(__fetchTodos());
     } catch (error) {}
   };
 

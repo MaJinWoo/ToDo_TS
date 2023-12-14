@@ -1,29 +1,29 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setTodos } from "../redux/modules/todosSlice";
-import { RootState } from "../redux/config/configStore";
-import { axiosAddTodo, fetchTodos } from "../axios/todos";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../redux/config/configStore";
+import { __addTodo, __fetchTodos } from "../redux/modules/todosSlice";
+import { Todo } from "../types/Todo";
 
+type OmitType = Omit<Todo, "id">;
 export default function AddForm() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
 
-  const todos = useSelector((state: RootState) => state.todosSlice);
-
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleAddTodoSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newTodo = {
-      id: todos.length + 1,
+    const newTodo: OmitType = {
       title,
       content,
       isDone: false,
     };
     try {
-      await axiosAddTodo(newTodo);
-      await fetchTodos().then((data) => dispatch(setTodos(data)));
-    } catch (error) {}
+      await dispatch(__addTodo(newTodo));
+      await dispatch(__fetchTodos());
+    } catch (error) {
+      console.log("add 에러 발생:", error);
+    }
     setTitle("");
     setContent("");
   };
