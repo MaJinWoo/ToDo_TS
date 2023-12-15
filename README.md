@@ -36,11 +36,14 @@
   <img src = "./src/assets/addform.png"/>
 
 - TodosList (미완료된 목록)
-
+  - 완료 버튼: Done List로 이동
+  - 삭제 버튼: To Do 삭제
 <img src = "./src/assets/todoList.png"/>
 
 - TodosList (완료된 목록)
+  - 취소 버튼: Todo List로 이동
+  - 삭제 버튼: To Do 삭제
   <img src = "./src/assets/doneList.png"/>
 
 - common/Button.tsx
-  버튼의 type, 버튼에 들어갈 text, color, eventHandler 함수를 받아 button 태그를 반환
+  - 버튼의 type, 버튼에 들어갈 text, color, eventHandler 함수를 받아 button 태그를 반환
