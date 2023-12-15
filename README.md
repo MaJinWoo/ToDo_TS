@@ -37,10 +37,10 @@
 
 - TodosList (미완료된 목록)
 
-<img src = "./src/assets/todolist.png"/>
+<img src = "./src/assets/todoList.png"/>
 
 - TodosList (완료된 목록)
-  <img src = "./src/assets/donelist.png"/>
+  <img src = "./src/assets/doneList.png"/>
 
 - common/Button.tsx
   버튼의 type, 버튼에 들어갈 text, color, eventHandler 함수를 받아 button 태그를 반환
