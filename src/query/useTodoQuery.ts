@@ -8,10 +8,12 @@ export const useTodoQuery = () => {
   const queryClient = useQueryClient();
 
   //query
+
   const {
     data: todos,
     isLoading,
     isError,
+    error,
   } = useQuery({
     queryKey: [queryKeys.todos],
     queryFn: fetchTodos,

@@ -15,7 +15,11 @@ export const useTodos = () => {
   };
 
   const deleteTodo = (id: Todo["id"]) => {
-    deleteTodoMutation.mutate(id);
+    if (window.confirm("정말로 삭제하시겠습니까?")) {
+      return deleteTodoMutation.mutate(id);
+    } else {
+      return;
+    }
   };
 
   const switchTodo = (id: Todo["id"], isDone: Todo["isDone"]) => {

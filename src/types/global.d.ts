@@ -1,4 +1,4 @@
-interface Todo {
+declare interface Todo {
   id: string;
   title: string;
   content: string;

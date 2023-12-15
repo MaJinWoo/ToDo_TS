@@ -1,9 +1,11 @@
 import api from "../axios/api";
-
+// import api from "@/axios/api";
 type NewTodoType = Omit<Todo, "id">;
 type SwitchTodoType = Pick<Todo, "id" | "isDone">;
 
 // api 관련 로직
+// isAxiosError => error의 타입을 정의
+// axios.isAxiosError<> => record 사용
 
 export const fetchTodos = async () => {
   try {
