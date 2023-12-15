@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setTodos } from "../redux/modules/todosSlice";
 import { RootState } from "../redux/config/configStore";
 import { axiosAddTodo, fetchTodos } from "../axios/todos";
+import { Todo } from "../types/Todo";
 
 export default function AddForm() {
   const [title, setTitle] = useState<string>("");
@@ -22,7 +23,7 @@ export default function AddForm() {
     };
     try {
       await axiosAddTodo(newTodo);
-      await fetchTodos().then((data) => dispatch(setTodos(data)));
+      await fetchTodos().then((data: Todo[]) => dispatch(setTodos(data)));
     } catch (error) {}
     setTitle("");
     setContent("");

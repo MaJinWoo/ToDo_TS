@@ -11,12 +11,6 @@
       "title": "타입스크립트 공부",
       "content": "타입스크립트 정복하기",
       "isDone": true
-    },
-    {
-      "id": 3,
-      "title": "TIL쓰기",
-      "content": "TIL 쓰고 제출하기",
-      "isDone": true
     }
   ]
 }

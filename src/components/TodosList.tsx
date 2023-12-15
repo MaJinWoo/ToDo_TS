@@ -15,7 +15,7 @@ export default function TodosList({
   const handleDeleteBtnClick = async (id: Todo["id"]) => {
     try {
       await axiosDeleteTodo(id);
-      await fetchTodos().then((data) => dispatch(setTodos(data)));
+      await fetchTodos().then((data: Todo[]) => dispatch(setTodos(data)));
     } catch (error) {
       console.log("delete error", error);
     }
@@ -27,7 +27,7 @@ export default function TodosList({
   ) => {
     try {
       await axiosSwitchTodo(id, isDone);
-      await fetchTodos().then((data) => dispatch(setTodos(data)));
+      await fetchTodos().then((data: Todo[]) => dispatch(setTodos(data)));
     } catch (error) {}
   };
 
