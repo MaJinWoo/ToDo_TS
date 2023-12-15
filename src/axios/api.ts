@@ -7,7 +7,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   function (config) {
-    console.log("인터셉트 요청 성공!");
+    console.log("인터셉트 요청 성공!", config.method);
     return config;
   },
   function (error) {

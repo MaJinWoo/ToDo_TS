@@ -8,10 +8,7 @@ interface BtnType {
 }
 // type, text, eventHandler를 받는 버튼 컴포넌트
 
-// 예: <Button type = "" text = "" eventHandler={() => handleDeleteBtnClick(todo.id)}/>
-
 export default function Button({ type, text, color, eventHandler }: BtnType) {
-  console.log("button color ", color);
   return (
     <BtnWrapper color={color}>
       <button type={type} onClick={eventHandler}>
@@ -32,11 +29,16 @@ const BtnWrapper = styled.div<{ color?: string }>`
     user-select: none;
     width: 80px;
     height: 30px;
-    background-color: ${(props) => props.color || "black"};
+    background-color: transparent;
     border-radius: 10px;
     /* color: ${(props) => props.color || "black"}; */
-    color: white;
+    color: ${(props) => props.color || "black"};
     border: ${(props) =>
       props.color ? `2px solid ${props.color}` : "2px solid black"};
+
+    &:hover {
+      background-color: ${(props) => props.color || "black"};
+      color: white;
+    }
   }
 `;
