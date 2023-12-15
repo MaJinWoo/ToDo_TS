@@ -18,28 +18,23 @@
 
 
 ## Technologies
-- Tech 1 - version 1.0
-- Tech 2 - version 2.0
-- Tech 3 - version 3.0
+<img src = "https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" />
+<img src = "https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
+<img src = "https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"/>
 
 
 ## Components
+
 - Input
 <img src = "./src/assets/addform.png"/>
 
-- TodosList
-- 미완료된 목록
+- TodosList (미완료된 목록)
+
 <img src = "./src/assets/todolist.png"/>
 
-- 완료된 목록
+- TodosList (완료된 목록)
 <img src = "./src/assets/donelist.png"/>
 
-
-
-
-## Screenshots
-![Example screenshot](./img/screenshot.png)
-<!-- If you have screenshots you'd like to share, include them here. -->
 
 
 ## Setup
