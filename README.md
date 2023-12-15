@@ -4,12 +4,12 @@
 
 ### Input
 
-<img src = "./assets/addform.png"></img>
+<img src = "./src/assets/addform.png"></img>
 
 ### TodosList
 
 완료되지 않은 목록
-<img src = "./assets/todolist.png"/>
+<img src = "./src/assets/todolist.png"/>
 
 완료된 목록
-<img src = "./assets/donelist.png"/>
+<img src = "./src/assets/donelist.png"/>
