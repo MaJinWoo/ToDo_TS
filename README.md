@@ -28,11 +28,11 @@
 <img src = "./src/assets/addform.png"/>
 
 - TodosList
-미완료된 목록
+- 미완료된 목록
 <img src = "./src/assets/todolist.png"/>
 
-완료된 목록
-<img src = "./src/assets/donelist.png"/>
+- 완료된 목록
+<img src = "./src/assets/donelist.png"/>
 
 
 
